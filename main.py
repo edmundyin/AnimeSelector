@@ -2,7 +2,7 @@ from random import choice
 import requests
 import json
 
-
+# Gets the API with user selected parameters, if valid, converts text from API to a python dictionary, data.
 def getAPI(genre, score, start_date):
 
     apiURL = "https://api.jikan.moe/v4/anime"
@@ -14,6 +14,8 @@ def getAPI(genre, score, start_date):
         data = json.loads(response.text)
         return data
 
+# Takes in genre as an input from user, returns an id that corresponds to the genre, 
+# as genres are stored through numbers in the API.
 def genreToMALid(genre):
 
     genre = genre.lower()
@@ -40,21 +42,23 @@ def genreToMALid(genre):
         case "slice of life":
             return 36
 
-
+# Creates a list to store anime names, retrieves a set of data from API, takes the title in english from 
+# that set of data, stores into list, if unique. Returns list.
 def animeSelector(data):
 
     list = []
-    synopsis_list = []
-
+    
     while len(list) < len(data):
         anime = choice(data['data'])
-
         anime_title = anime['title_english']
-
-        list.append(anime_title)
+        
+        if (not(anime_title in list)):
+            list.append(anime_title)
 
     return list
 
+# Asks user for 3 inputs, genre, score, premiere date. Uses those inputs as parameteres for the API, 
+# then chooses a random anime from the list created.
 def main():
 
     genre = input("Please provide a valid genre: ")
