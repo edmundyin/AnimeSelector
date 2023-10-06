@@ -6,9 +6,9 @@ import json
 def getAPI(genre, score, start_date):
 
     apiURL = "https://api.jikan.moe/v4/anime"
-    query_params = {'min_score': score, 'start_date': start_date, 'genre': genre}
+    params = {'min_score': score, 'start_date': start_date, 'genre': genre}
 
-    response = requests.get(apiURL, query_params)
+    response = requests.get(apiURL, params)
 
     if response.status_code == 200:
         data = json.loads(response.text)
